@@ -1,0 +1,7 @@
+{
+  "type": "lesson",
+  "title": "Avoid any type in TypeScript",
+  "date": "2026-06-02",
+  "severity": "high",
+  "tags": ["typescript", "types"]
+}

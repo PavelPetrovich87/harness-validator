@@ -1,0 +1,5 @@
+{
+  "features": [
+    { "id": "feature-01", "title": "Wrong id format", "status": "planned" }
+  ]
+}

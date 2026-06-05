@@ -1,0 +1,42 @@
+{
+  "name": "ai-harness-validator",
+  "version": "0.1.0",
+  "description": "AST-based validator for AI Harness system",
+  "type": "module",
+  "scripts": {
+    "generate:agents": "tsx generate-agents.ts",
+    "validate": "tsx validate-harness.ts",
+    "validate:feature-list": "ajv validate -s schemas/feature_list.schema.json -d feature_list.json",
+    "validate:knowledge": "ajv validate -s schemas/knowledge_frontmatter.schema.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "architecture": "depcruise src --config .dependency-cruiser.js",
+    "setup": "tsx setup-harness.ts",
+    "setup:ci": "tsx setup-harness.ts --non-interactive",
+    "dogfood": "tsx scripts/dogfood.ts",
+    "dogfood:all": "tsx scripts/dogfood.ts --all"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "glob": "^10.4.5",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1",
+    "dependency-cruiser": "^17.4.3",
+    "github-actionlint": "^1.7.12",
+    "lefthook": "^2.1.9",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

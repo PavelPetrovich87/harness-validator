@@ -1,0 +1,88 @@
+{
+  "validated_at": "2026-06-04T13:40:54.575Z",
+  "version": "0.1.0",
+  "errors": 3,
+  "warnings": 2,
+  "results": [
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Stack\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Safety\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Session Protocol\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Feedback Loop\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Circuit Breaker\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "FAIL",
+      "message": "65 lines (max 60)"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Safety section has 6 items"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "FAIL",
+      "message": "Feedback Loop section has 0 items (min 3)"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Circuit Breaker section has 4 items"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "WARN",
+      "message": ".claude/instructions/ directory tree not found"
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "status": "PASS",
+      "message": ".dependency-cruiser.js has 2 forbidden rules"
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "status": "PASS",
+      "message": "feature_list.json validates against schema"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": "lefthook.yml exists and is non-empty"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "FAIL",
+      "message": "lefthook.yml has 1 pre-commit commands (min 3)"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": "lefthook.yml pre-commit runs in parallel"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "WARN",
+      "message": ".github/workflows/ci.yml not found"
+    }
+  ]
+}

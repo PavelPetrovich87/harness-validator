@@ -1,0 +1,14 @@
+{
+  "features": [
+    {
+      "id": "F01",
+      "title": "Implement validator",
+      "status": "in_progress"
+    },
+    {
+      "id": "F02",
+      "title": "Create JSON schemas",
+      "status": "planned"
+    }
+  ]
+}

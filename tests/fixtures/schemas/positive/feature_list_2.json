@@ -1,0 +1,5 @@
+{
+  "features": [
+    { "id": "F10", "title": "Single feature", "status": "planned", "description": "With optional description" }
+  ]
+}

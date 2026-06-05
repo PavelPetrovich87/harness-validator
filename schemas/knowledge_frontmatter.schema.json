@@ -1,0 +1,80 @@
+{
+  "$id": "https://ai-harness.dev/schemas/knowledge_frontmatter.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Knowledge Base Frontmatter",
+  "description": "Schema for frontmatter in docs/knowledge/*.md files (decisions, lessons, patterns, triage)",
+  "type": "object",
+  "required": ["type", "title", "date"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["decision", "lesson", "pattern", "triage"],
+      "description": "Record type"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Record title"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Record date (YYYY-MM-DD)"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Tags for categorization"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "type": { "const": "decision" } }
+      },
+      "then": {
+        "required": ["status"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["proposed", "accepted", "rejected", "deprecated", "superseded"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "lesson" } }
+      },
+      "then": {
+        "required": ["severity"],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "triage" } }
+      },
+      "then": {
+        "required": ["attempts", "feature"],
+        "properties": {
+          "attempts": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of failed attempts before triage"
+          },
+          "feature": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Feature ID that triggered triage"
+          }
+        }
+      }
+    }
+  ]
+}

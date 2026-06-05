@@ -1,0 +1,12 @@
+{
+  "validated_at": "2026-06-02T14:30:00.000Z",
+  "version": "1.2.3",
+  "errors": 2,
+  "warnings": 1,
+  "results": [
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK" },
+    { "phase": "ARCHITECTURE", "status": "FAIL", "message": "Missing config", "details": "File not found" },
+    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "Old schema" },
+    { "phase": "INTEGRATION", "status": "FAIL", "message": "Missing lefthook" }
+  ]
+}

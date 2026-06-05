@@ -1,0 +1,8 @@
+{
+  "type": "triage",
+  "title": "Circuit breaker triage for F03",
+  "date": "2026-06-02",
+  "attempts": 3,
+  "feature": "F03",
+  "tags": ["circuit-breaker"]
+}

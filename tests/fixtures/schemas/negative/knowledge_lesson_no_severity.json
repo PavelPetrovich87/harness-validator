@@ -1,0 +1,6 @@
+{
+  "type": "lesson",
+  "title": "Missing severity field",
+  "date": "2026-06-02",
+  "tags": ["lint"]
+}

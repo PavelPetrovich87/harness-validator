@@ -1,0 +1,108 @@
+{
+  "validated_at": "2026-06-04T12:20:37.424Z",
+  "version": "0.1.0",
+  "errors": 0,
+  "warnings": 1,
+  "results": [
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Stack\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Safety\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Session Protocol\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Feedback Loop\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "H2 heading \"Circuit Breaker\" detected via AST"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Line count: 42 (max 60)"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Safety section has 6 items"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Feedback Loop section has 5 items"
+    },
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "PASS",
+      "message": "Circuit Breaker section has 4 items"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": ".claude/instructions/local/ has 2 .md file(s)"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": "Valid frontmatter: /Users/user/work/harness_project/.claude/instructions/local/harness-development.md"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": "Valid frontmatter: /Users/user/work/harness_project/.claude/instructions/local/validator-patterns.md"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "WARN",
+      "message": ".claude/instructions/shared/ not found"
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "status": "PASS",
+      "message": ".dependency-cruiser.js has 2 forbidden rules"
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "status": "PASS",
+      "message": "feature_list.json validates against schema"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": "lefthook.yml exists and is non-empty"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": "lefthook.yml has 4 pre-commit commands"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": "lefthook.yml pre-commit runs in parallel"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": ".github/workflows/ci.yml exists"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "PASS",
+      "message": ".github/workflows/ci.yml has 4 jobs"
+    }
+  ]
+}

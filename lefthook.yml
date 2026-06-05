@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: "echo 'lint: configure your linter (e.g. biome check)'"
+    typecheck:
+      run: npx tsc --noEmit
+    test:
+      run: npm test
+    architecture:
+      run: npm run architecture

@@ -1,0 +1,5 @@
+{
+  "features": [
+    { "id": "F1", "title": "Invalid id format", "status": "planned" }
+  ]
+}

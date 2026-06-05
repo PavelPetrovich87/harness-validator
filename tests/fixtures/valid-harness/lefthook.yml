@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: biome check
+    typecheck:
+      run: tsc --noEmit
+    test:
+      run: vitest run
+    architecture:
+      run: depcruise src --config .dependency-cruiser.js

@@ -1,0 +1,6 @@
+{
+  "features": [
+    { "id": "F01", "title": "Implement validator", "status": "done" },
+    { "id": "F02", "title": "Create schemas", "status": "in_progress" }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$id": "https://ai-harness.dev/schemas/instruction_frontmatter.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Instruction Module Frontmatter",
+  "description": "Schema for frontmatter in .claude/instructions/**/*.md files",
+  "type": "object",
+  "required": ["name", "type", "trigger", "tags"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable instruction name"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["instruction"],
+      "description": "Record type"
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Trigger condition for applying this instruction"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "description": "Tags for categorization"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional description"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "validated_at": "2026-06-04T10:00:00.000Z",
+  "version": "0.1.0",
+  "errors": 1,
+  "warnings": 1,
+  "results": [
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "AGENTS.md structure valid" },
+    { "phase": "INSTRUCTION_MODULES", "status": "PASS", "message": "2 local instruction modules found" },
+    { "phase": "ARCHITECTURE", "status": "PASS", "message": "dependency-cruiser config valid" },
+    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "feature_list.json uses old schema version" },
+    { "phase": "INTEGRATION", "status": "FAIL", "message": "lefthook.yml not found" }
+  ]
+}

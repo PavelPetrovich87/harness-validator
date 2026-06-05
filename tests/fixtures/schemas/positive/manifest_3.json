@@ -1,0 +1,9 @@
+{
+  "validated_at": "2026-06-02T14:30:00.000Z",
+  "version": "2.0.0",
+  "errors": 1,
+  "warnings": 2,
+  "results": [
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK", "details": null }
+  ]
+}

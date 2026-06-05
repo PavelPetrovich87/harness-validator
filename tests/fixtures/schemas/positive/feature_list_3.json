@@ -1,0 +1,6 @@
+{
+  "features": [
+    { "id": "F01", "title": "Feature", "status": "blocked" },
+    { "id": "F99", "title": "Last feature", "status": "done" }
+  ]
+}

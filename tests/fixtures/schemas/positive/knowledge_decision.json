@@ -1,0 +1,7 @@
+{
+  "type": "decision",
+  "title": "Use PostgreSQL as primary database",
+  "date": "2026-06-02",
+  "status": "accepted",
+  "tags": ["database", "architecture"]
+}

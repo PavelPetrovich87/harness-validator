@@ -1,0 +1,21 @@
+{
+  "features": [
+    {
+      "id": "F01",
+      "title": "First feature",
+      "status": "planned",
+      "description": "Optional description for first feature"
+    },
+    {
+      "id": "F02",
+      "title": "Second feature",
+      "status": "in_progress",
+      "description": "Optional description for second feature"
+    },
+    {
+      "id": "F03",
+      "title": "Third feature",
+      "status": "done"
+    }
+  ]
+}

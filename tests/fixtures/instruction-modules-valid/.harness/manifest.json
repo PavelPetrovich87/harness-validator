@@ -1,0 +1,53 @@
+{
+  "validated_at": "2026-06-04T13:40:54.961Z",
+  "version": "0.1.0",
+  "errors": 4,
+  "warnings": 1,
+  "results": [
+    {
+      "phase": "AST_STRUCTURE",
+      "status": "FAIL",
+      "message": "AGENTS.md not found"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": ".claude/instructions/local/ has 2 .md file(s)"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/api-endpoints.md"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/react-components.md"
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "status": "PASS",
+      "message": ".claude/instructions/shared/ has 1 .md file(s)"
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "status": "FAIL",
+      "message": ".dependency-cruiser.js not found"
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "status": "FAIL",
+      "message": "feature_list.json not found"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "FAIL",
+      "message": "lefthook.yml not found"
+    },
+    {
+      "phase": "INTEGRATION",
+      "status": "WARN",
+      "message": ".github/workflows/ci.yml not found"
+    }
+  ]
+}

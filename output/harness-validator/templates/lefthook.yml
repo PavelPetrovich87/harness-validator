@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: {{LINT_CMD}}
+    typecheck:
+      run: {{TYPECHECK_CMD}}
+    test:
+      run: {{TEST_CMD}}
+    architecture:
+      run: depcruise src --config .dependency-cruiser.js
