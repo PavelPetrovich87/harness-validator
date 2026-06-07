@@ -1,78 +1,162 @@
 {
-  "validated_at": "2026-06-04T13:40:54.591Z",
+  "validated_at": "2026-06-07T09:28:47.703Z",
   "version": "0.1.0",
+  "criteria_version": "0.1.0",
   "errors": 1,
   "warnings": 2,
   "results": [
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "H2 heading \"Stack\" detected via AST"
+      "message": "H2 heading \"Stack\" detected via AST",
+      "criterionId": "ast-section-stack",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "H2 heading \"Safety\" detected via AST"
+      "message": "H2 heading \"Safety\" detected via AST",
+      "criterionId": "ast-section-safety",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "H2 heading \"Session Protocol\" detected via AST"
+      "message": "H2 heading \"Session Protocol\" detected via AST",
+      "criterionId": "ast-section-session-protocol",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "H2 heading \"Feedback Loop\" detected via AST"
+      "message": "H2 heading \"Feedback Loop\" detected via AST",
+      "criterionId": "ast-section-feedback-loop",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "H2 heading \"Circuit Breaker\" detected via AST"
+      "message": "H2 heading \"Circuit Breaker\" detected via AST",
+      "criterionId": "ast-section-circuit-breaker",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "Line count: 39 (max 60)"
+      "message": "Line count: 39 (max 60)",
+      "criterionId": "ast-line-count",
+      "severity": "warning"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "Safety section has 5 items"
+      "message": "Safety section has 5 items",
+      "criterionId": "ast-safety-items",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "Feedback Loop section has 5 items"
+      "message": "Feedback Loop section has 5 items",
+      "criterionId": "ast-feedback-loop-items",
+      "severity": "critical"
     },
     {
       "phase": "AST_STRUCTURE",
       "status": "PASS",
-      "message": "Circuit Breaker section has 4 items"
+      "message": "Circuit Breaker section has 4 items",
+      "criterionId": "ast-circuit-breaker-items",
+      "severity": "critical"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "WARN",
-      "message": ".claude/instructions/ directory tree not found"
+      "message": ".claude/instructions/ directory tree not found",
+      "criterionId": "im-tree-exists",
+      "severity": "warning",
+      "recommendation": "Create .claude/instructions/ with local/ and shared/ subdirectories"
     },
     {
       "phase": "ARCHITECTURE",
       "status": "PASS",
-      "message": ".dependency-cruiser.js has 2 forbidden rules"
+      "message": ".dependency-cruiser.js has 2 forbidden rules",
+      "criterionId": "arch-forbidden-count",
+      "severity": "critical"
     },
     {
       "phase": "DATA_CONTRACTS",
       "status": "PASS",
-      "message": "feature_list.json validates against schema"
+      "message": "feature_list.json validates against schema",
+      "criterionId": "dc-feature-list-valid",
+      "severity": "critical"
     },
     {
       "phase": "INTEGRATION",
       "status": "FAIL",
-      "message": "lefthook.yml not found"
+      "message": "lefthook.yml not found",
+      "criterionId": "int-lefthook-exists",
+      "severity": "critical",
+      "recommendation": "Create lefthook.yml with pre-commit hooks"
     },
     {
       "phase": "INTEGRATION",
       "status": "WARN",
-      "message": ".github/workflows/ci.yml not found"
+      "message": ".github/workflows/ci.yml not found",
+      "criterionId": "int-ci-exists",
+      "severity": "warning",
+      "recommendation": "Create .github/workflows/ci.yml with at least 4 jobs"
+    }
+  ],
+  "scores": [
+    {
+      "phase": "AST_STRUCTURE",
+      "score": 100,
+      "passCount": 9,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 9,
+      "recommendations": []
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 0,
+      "warnCount": 1,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create .claude/instructions/ with local/ and shared/ subdirectories"
+      ]
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "score": 100,
+      "passCount": 1,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": []
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "score": 100,
+      "passCount": 1,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": []
+    },
+    {
+      "phase": "INTEGRATION",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 1,
+      "totalCriteria": 2,
+      "recommendations": [
+        "Create lefthook.yml with pre-commit hooks",
+        "Create .github/workflows/ci.yml with at least 4 jobs"
+      ]
     }
   ]
 }

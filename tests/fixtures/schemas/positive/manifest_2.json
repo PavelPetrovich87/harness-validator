@@ -1,12 +1,19 @@
 {
   "validated_at": "2026-06-02T14:30:00.000Z",
   "version": "1.2.3",
+  "criteria_version": "0.1.0",
   "errors": 2,
   "warnings": 1,
   "results": [
-    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK" },
-    { "phase": "ARCHITECTURE", "status": "FAIL", "message": "Missing config", "details": "File not found" },
-    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "Old schema" },
-    { "phase": "INTEGRATION", "status": "FAIL", "message": "Missing lefthook" }
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK", "criterionId": "ast-sections-present", "severity": "critical" },
+    { "phase": "ARCHITECTURE", "status": "FAIL", "message": "Missing config", "details": "File not found", "criterionId": "arch-config-exists", "severity": "critical", "recommendation": "Create .dependency-cruiser.js" },
+    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "Old schema", "criterionId": "dc-schema-exists", "severity": "warning" },
+    { "phase": "INTEGRATION", "status": "FAIL", "message": "Missing lefthook", "criterionId": "int-lefthook-exists", "severity": "critical", "recommendation": "Create lefthook.yml" }
+  ],
+  "scores": [
+    { "phase": "AST_STRUCTURE", "score": 100, "passCount": 1, "failCount": 0, "warnCount": 0, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "ARCHITECTURE", "score": 0, "passCount": 0, "failCount": 1, "warnCount": 0, "totalCriteria": 1, "recommendations": ["Create .dependency-cruiser.js"] },
+    { "phase": "DATA_CONTRACTS", "score": 0, "passCount": 0, "failCount": 0, "warnCount": 1, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "INTEGRATION", "score": 0, "passCount": 0, "failCount": 1, "warnCount": 0, "totalCriteria": 1, "recommendations": ["Create lefthook.yml"] }
   ]
 }

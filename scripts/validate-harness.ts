@@ -1,13 +1,17 @@
 import { join } from 'node:path';
 import { HarnessValidator } from '../src/validator.js';
+import { formatScoreTable, formatRecommendations } from '../src/scoring.js';
+import { readManifest, diffScores, formatDiff } from '../src/diff.js';
 
 function printUsage(): void {
-  console.log('Usage: npx tsx scripts/validate-harness.ts [--project <path>] [--github]');
+  console.log('Usage: npx tsx scripts/validate-harness.ts [--project <path>] [--github] [--recommendations] [--compare]');
   console.log('');
   console.log('Options:');
-  console.log('  --project <path>   Project root directory (default: current directory)');
-  console.log('  --github           Emit GitHub Actions workflow commands');
-  console.log('  --help             Show this help');
+  console.log('  --project <path>      Project root directory (default: current directory)');
+  console.log('  --github              Emit GitHub Actions workflow commands');
+  console.log('  --recommendations     Show recommendations for failed/warned criteria');
+  console.log('  --compare             Compare scores with previous manifest');
+  console.log('  --help                Show this help');
 }
 
 async function main(): Promise<void> {
@@ -25,12 +29,17 @@ async function main(): Promise<void> {
   }
 
   const isGitHub = args.includes('--github');
+  const showRecommendations = args.includes('--recommendations');
+  const showCompare = args.includes('--compare');
+
+  const manifestPath = join(projectRoot, '.harness/manifest.json');
+  const previousManifest = showCompare ? readManifest(manifestPath) : null;
 
   const validator = new HarnessValidator({
     projectRoot,
-    manifestPath: join(projectRoot, '.harness/manifest.json'),
+    manifestPath,
   });
-  const { results, exitCode } = await validator.run();
+  const { results, exitCode, scores } = await validator.run();
 
   // Print results
   for (const result of results) {
@@ -58,12 +67,23 @@ async function main(): Promise<void> {
   }
 
   console.log('');
-  const failCount = results.filter((r) => r.status === 'FAIL').length;
-  const warnCount = results.filter((r) => r.status === 'WARN').length;
-  const passCount = results.filter((r) => r.status === 'PASS').length;
 
-  console.log(`Results: ${passCount} passed, ${warnCount} warnings, ${failCount} failed`);
-  console.log(`Manifest written to: .harness/manifest.json`);
+  // Print score table
+  console.log(formatScoreTable(scores));
+
+  if (showRecommendations) {
+    console.log('');
+    console.log(formatRecommendations(scores));
+  }
+
+  if (showCompare) {
+    console.log('');
+    const diff = diffScores(scores, previousManifest);
+    console.log(formatDiff(diff));
+  }
+
+  console.log('');
+  console.log(`Manifest written to: ${manifestPath}`);
 
   process.exit(exitCode);
 }

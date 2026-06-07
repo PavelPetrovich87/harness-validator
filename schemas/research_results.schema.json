@@ -1,0 +1,111 @@
+{
+  "$id": "https://ai-harness.dev/schemas/research_results.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Harness Research Results",
+  "description": "Schema for Deep Research output consumed by apply-research.ts",
+  "type": "object",
+  "required": ["addPhases", "addCriteria", "updateCriteria", "removeCriteria", "version"],
+  "properties": {
+    "addPhases": {
+      "type": "array",
+      "description": "New validation phases to add",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "criteria"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Z_]+$",
+            "description": "Phase name in SCREAMING_SNAKE_CASE"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "criteria": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "addCriteria": {
+      "type": "array",
+      "description": "New criteria to add to existing phases",
+      "items": {
+        "type": "object",
+        "required": ["phase", "criterionId", "rule", "severity"],
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": ["AST_STRUCTURE", "INSTRUCTION_MODULES", "ARCHITECTURE", "DATA_CONTRACTS", "INTEGRATION"]
+          },
+          "criterionId": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "kebab-case identifier"
+          },
+          "rule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "warning", "info"]
+          },
+          "recommendation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "updateCriteria": {
+      "type": "array",
+      "description": "Criteria to update in place",
+      "items": {
+        "type": "object",
+        "required": ["criterionId", "newRule"],
+        "properties": {
+          "criterionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "newRule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "newSeverity": {
+            "type": "string",
+            "enum": ["critical", "warning", "info"]
+          },
+          "newRecommendation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "removeCriteria": {
+      "type": "array",
+      "description": "Criteria to remove",
+      "items": {
+        "type": "object",
+        "required": ["criterionId", "reason"],
+        "properties": {
+          "criterionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "New criteria version (semver)"
+    }
+  }
+}

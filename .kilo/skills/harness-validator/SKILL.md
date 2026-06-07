@@ -35,8 +35,8 @@ must have a recognizable stack: `package.json` (JS/TS), `pyproject.toml` /
 
 | Path | Role |
 |------|------|
-| `scripts/` | Executable CLI entrypoints (`setup-harness.ts`, `validate-harness.ts`, `generate-agents.ts`, `dogfood.ts`) |
-| `src/` | Library implementation (generators, validator phases, dogfood, utils) |
+| `scripts/` | Executable CLI entrypoints (`setup-harness.ts`, `validate-harness.ts`, `generate-agents.ts`, `dogfood.ts`, `diagnose-harness.ts`, `generate-research-prompt.ts`, `apply-research.ts`) |
+| `src/` | Library implementation (generators, validator phases, dogfood, utils, scoring, diagnostics, diff) |
 | `templates/` | Output **assets** copied into target projects (see [references/artifacts.md](references/artifacts.md)) |
 | `schemas/` | JSON Schemas for data contracts |
 | `references/` | Detailed docs, loaded on demand |
@@ -59,11 +59,23 @@ npx tsx scripts/setup-harness.ts --answers-json answers.json
 # Validate only (no generation)
 npx tsx scripts/validate-harness.ts --project <path>
 
+# Validate with score comparison and recommendations
+npx tsx scripts/validate-harness.ts --project <path> --recommendations --compare
+
+# Diagnose an existing project
+npx tsx scripts/diagnose-harness.ts --project <path>
+
 # Dogfood — single template (synthetic, fast)
 HARNESS_DOGFOOD_SYNTHETIC=1 npm run dogfood -- --template react-vite
 
 # Dogfood — all stacks (synthetic)
 HARNESS_DOGFOOD_SYNTHETIC=1 npm run dogfood -- --all
+
+# Research workflow: generate prompt for Deep Research
+npm run research:prompt
+
+# Research workflow: preview or apply research results
+npm run research:apply -- --input results.json
 ```
 
 Supported dogfood templates: `react-vite`, `nextjs`, `nuxt`, `python`.
@@ -72,9 +84,10 @@ Supported dogfood templates: `react-vite`, `nextjs`, `nuxt`, `python`.
 
 For step-by-step procedures, use the focused sub-skill that matches the task:
 
-- **`harness-setup`** — full setup flow (detect → generate → validate → circuit breaker)
-- **`harness-validate`** — 5-phase AST validation of an existing project
+- **`harness-setup`** — full setup flow with diagnostics (detect → diagnose → generate → validate → circuit breaker)
+- **`harness-validate`** — 5-phase AST validation with scoring, recommendations, and diff
 - **`harness-dogfood`** — test the harness on disposable real/synthetic projects
+- **`harness-update`** — self-update workflow via Deep Research (generate prompt → review diff → apply)
 
 ## Reference Material
 

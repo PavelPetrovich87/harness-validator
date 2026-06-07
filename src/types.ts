@@ -12,19 +12,39 @@ export enum ValidationPhase {
 
 export type ValidationStatus = 'PASS' | 'FAIL' | 'WARN';
 
+export type Severity = 'critical' | 'warning' | 'info';
+
 export interface ValidationResult {
   phase: ValidationPhase;
   status: ValidationStatus;
   message: string;
   details?: string;
+  /** Unique identifier for the criterion within the phase */
+  criterionId: string;
+  /** Severity of the criterion failure */
+  severity: Severity;
+  /** Human-readable recommendation when status is FAIL or WARN */
+  recommendation?: string;
+}
+
+export interface ModuleScore {
+  phase: ValidationPhase;
+  score: number; // 0–100
+  passCount: number;
+  failCount: number;
+  warnCount: number;
+  totalCriteria: number;
+  recommendations: string[];
 }
 
 export interface Manifest {
   validated_at: string;
   version: string;
+  criteria_version: string;
   errors: number;
   warnings: number;
   results: ValidationResult[];
+  scores: ModuleScore[];
 }
 
 export interface HeadingAliasMap {

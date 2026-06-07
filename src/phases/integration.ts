@@ -20,6 +20,9 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
       phase: ValidationPhase.INTEGRATION,
       status: 'FAIL',
       message: 'lefthook.yml not found',
+      criterionId: 'int-lefthook-exists',
+      severity: 'critical',
+      recommendation: 'Create lefthook.yml with pre-commit hooks',
     });
   } else {
     try {
@@ -29,12 +32,17 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
           phase: ValidationPhase.INTEGRATION,
           status: 'FAIL',
           message: 'lefthook.yml is empty',
+          criterionId: 'int-lefthook-nonempty',
+          severity: 'critical',
+          recommendation: 'Add pre-commit commands to lefthook.yml',
         });
       } else {
         results.push({
           phase: ValidationPhase.INTEGRATION,
           status: 'PASS',
           message: 'lefthook.yml exists and is non-empty',
+          criterionId: 'int-lefthook-nonempty',
+          severity: 'critical',
         });
 
         // AC4: Check lefthook has 3+ commands
@@ -48,12 +56,17 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
             phase: ValidationPhase.INTEGRATION,
             status: 'FAIL',
             message: `lefthook.yml has ${commandCount} pre-commit commands (min ${MIN_LEFTHOOK_COMMANDS})`,
+            criterionId: 'int-lefthook-commands',
+            severity: 'critical',
+            recommendation: `Add at least ${MIN_LEFTHOOK_COMMANDS} commands to lefthook.yml pre-commit hooks`,
           });
         } else {
           results.push({
             phase: ValidationPhase.INTEGRATION,
             status: 'PASS',
             message: `lefthook.yml has ${commandCount} pre-commit commands`,
+            criterionId: 'int-lefthook-commands',
+            severity: 'critical',
           });
         }
 
@@ -63,12 +76,17 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
             phase: ValidationPhase.INTEGRATION,
             status: 'PASS',
             message: 'lefthook.yml pre-commit runs in parallel',
+            criterionId: 'int-lefthook-parallel',
+            severity: 'warning',
           });
         } else {
           results.push({
             phase: ValidationPhase.INTEGRATION,
             status: 'WARN',
             message: 'lefthook.yml pre-commit is not configured for parallel execution',
+            criterionId: 'int-lefthook-parallel',
+            severity: 'warning',
+            recommendation: 'Set parallel: true under pre-commit in lefthook.yml for faster hooks',
           });
         }
       }
@@ -77,6 +95,9 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
         phase: ValidationPhase.INTEGRATION,
         status: 'FAIL',
         message: 'Cannot read lefthook.yml',
+        criterionId: 'int-lefthook-parseable',
+        severity: 'critical',
+        recommendation: 'Ensure lefthook.yml is valid YAML',
       });
     }
   }
@@ -88,12 +109,17 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
       phase: ValidationPhase.INTEGRATION,
       status: 'WARN',
       message: '.github/workflows/ci.yml not found',
+      criterionId: 'int-ci-exists',
+      severity: 'warning',
+      recommendation: 'Create .github/workflows/ci.yml with at least 4 jobs',
     });
   } else {
     results.push({
       phase: ValidationPhase.INTEGRATION,
       status: 'PASS',
       message: '.github/workflows/ci.yml exists',
+      criterionId: 'int-ci-exists',
+      severity: 'warning',
     });
 
     // AC4: Check CI has 4+ jobs
@@ -108,12 +134,17 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
           phase: ValidationPhase.INTEGRATION,
           status: 'FAIL',
           message: `.github/workflows/ci.yml has ${jobCount} jobs (min ${MIN_CI_JOBS})`,
+          criterionId: 'int-ci-jobs',
+          severity: 'critical',
+          recommendation: `Add at least ${MIN_CI_JOBS} jobs to .github/workflows/ci.yml`,
         });
       } else {
         results.push({
           phase: ValidationPhase.INTEGRATION,
           status: 'PASS',
           message: `.github/workflows/ci.yml has ${jobCount} jobs`,
+          criterionId: 'int-ci-jobs',
+          severity: 'critical',
         });
       }
     } catch {
@@ -121,6 +152,9 @@ export async function validateIntegration(projectRoot: string): Promise<Validati
         phase: ValidationPhase.INTEGRATION,
         status: 'FAIL',
         message: 'Cannot parse .github/workflows/ci.yml',
+        criterionId: 'int-ci-parseable',
+        severity: 'critical',
+        recommendation: 'Ensure .github/workflows/ci.yml is valid YAML',
       });
     }
   }

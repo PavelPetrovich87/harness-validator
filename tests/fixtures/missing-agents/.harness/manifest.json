@@ -1,48 +1,123 @@
 {
-  "validated_at": "2026-06-04T13:40:54.551Z",
+  "validated_at": "2026-06-07T09:28:47.666Z",
   "version": "0.1.0",
+  "criteria_version": "0.1.0",
   "errors": 2,
   "warnings": 2,
   "results": [
     {
       "phase": "AST_STRUCTURE",
       "status": "FAIL",
-      "message": "AGENTS.md not found"
+      "message": "AGENTS.md not found",
+      "criterionId": "ast-file-exists",
+      "severity": "critical",
+      "recommendation": "Create AGENTS.md at the project root with required H2 sections"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "WARN",
-      "message": ".claude/instructions/ directory tree not found"
+      "message": ".claude/instructions/ directory tree not found",
+      "criterionId": "im-tree-exists",
+      "severity": "warning",
+      "recommendation": "Create .claude/instructions/ with local/ and shared/ subdirectories"
     },
     {
       "phase": "ARCHITECTURE",
       "status": "PASS",
-      "message": ".dependency-cruiser.js has 2 forbidden rules"
+      "message": ".dependency-cruiser.js has 2 forbidden rules",
+      "criterionId": "arch-forbidden-count",
+      "severity": "critical"
     },
     {
       "phase": "DATA_CONTRACTS",
       "status": "PASS",
-      "message": "feature_list.json validates against schema"
+      "message": "feature_list.json validates against schema",
+      "criterionId": "dc-feature-list-valid",
+      "severity": "critical"
     },
     {
       "phase": "INTEGRATION",
       "status": "PASS",
-      "message": "lefthook.yml exists and is non-empty"
+      "message": "lefthook.yml exists and is non-empty",
+      "criterionId": "int-lefthook-nonempty",
+      "severity": "critical"
     },
     {
       "phase": "INTEGRATION",
       "status": "FAIL",
-      "message": "lefthook.yml has 1 pre-commit commands (min 3)"
+      "message": "lefthook.yml has 1 pre-commit commands (min 3)",
+      "criterionId": "int-lefthook-commands",
+      "severity": "critical",
+      "recommendation": "Add at least 3 commands to lefthook.yml pre-commit hooks"
     },
     {
       "phase": "INTEGRATION",
       "status": "PASS",
-      "message": "lefthook.yml pre-commit runs in parallel"
+      "message": "lefthook.yml pre-commit runs in parallel",
+      "criterionId": "int-lefthook-parallel",
+      "severity": "warning"
     },
     {
       "phase": "INTEGRATION",
       "status": "WARN",
-      "message": ".github/workflows/ci.yml not found"
+      "message": ".github/workflows/ci.yml not found",
+      "criterionId": "int-ci-exists",
+      "severity": "warning",
+      "recommendation": "Create .github/workflows/ci.yml with at least 4 jobs"
+    }
+  ],
+  "scores": [
+    {
+      "phase": "AST_STRUCTURE",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create AGENTS.md at the project root with required H2 sections"
+      ]
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 0,
+      "warnCount": 1,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create .claude/instructions/ with local/ and shared/ subdirectories"
+      ]
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "score": 100,
+      "passCount": 1,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": []
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "score": 100,
+      "passCount": 1,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": []
+    },
+    {
+      "phase": "INTEGRATION",
+      "score": 50,
+      "passCount": 2,
+      "failCount": 1,
+      "warnCount": 1,
+      "totalCriteria": 4,
+      "recommendations": [
+        "Add at least 3 commands to lefthook.yml pre-commit hooks",
+        "Create .github/workflows/ci.yml with at least 4 jobs"
+      ]
     }
   ]
 }

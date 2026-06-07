@@ -16,30 +16,43 @@ function assertValidManifest(manifest: unknown): void {
   expect(valid).toBe(true);
 }
 
+function makeResult(overrides: Partial<ValidationResult>): ValidationResult {
+  return {
+    phase: ValidationPhase.AST_STRUCTURE,
+    status: 'PASS',
+    message: 'OK',
+    criterionId: 'test-criterion',
+    severity: 'critical',
+    ...overrides,
+  };
+}
+
 describe('manifest', () => {
   it('generates manifest with correct structure', () => {
     const results: ValidationResult[] = [
-      { phase: ValidationPhase.AST_STRUCTURE, status: 'PASS', message: 'OK' },
-      { phase: ValidationPhase.ARCHITECTURE, status: 'PASS', message: 'OK' },
+      makeResult({ phase: ValidationPhase.AST_STRUCTURE }),
+      makeResult({ phase: ValidationPhase.ARCHITECTURE }),
     ];
 
     const manifest = generateManifest(results);
 
     expect(manifest.validated_at).toBeDefined();
     expect(manifest.version).toBe('0.1.0');
+    expect(manifest.criteria_version).toMatch(/^\d+\.\d+\.\d+$/);
     expect(manifest.errors).toBe(0);
     expect(manifest.warnings).toBe(0);
     expect(manifest.results).toHaveLength(2);
+    expect(manifest.scores).toEqual([]);
 
     assertValidManifest(manifest);
   });
 
   it('counts errors and warnings correctly', () => {
     const results: ValidationResult[] = [
-      { phase: ValidationPhase.AST_STRUCTURE, status: 'PASS', message: 'OK' },
-      { phase: ValidationPhase.ARCHITECTURE, status: 'FAIL', message: 'Missing' },
-      { phase: ValidationPhase.DATA_CONTRACTS, status: 'WARN', message: 'Old schema' },
-      { phase: ValidationPhase.INTEGRATION, status: 'FAIL', message: 'Missing' },
+      makeResult({ phase: ValidationPhase.AST_STRUCTURE }),
+      makeResult({ phase: ValidationPhase.ARCHITECTURE, status: 'FAIL', message: 'Missing' }),
+      makeResult({ phase: ValidationPhase.DATA_CONTRACTS, status: 'WARN', message: 'Old schema' }),
+      makeResult({ phase: ValidationPhase.INTEGRATION, status: 'FAIL', message: 'Missing' }),
     ];
 
     const manifest = generateManifest(results);
@@ -53,11 +66,11 @@ describe('manifest', () => {
 
   it('generates manifest with all 5 phases and validates against schema', () => {
     const results: ValidationResult[] = [
-      { phase: ValidationPhase.AST_STRUCTURE, status: 'PASS', message: 'AST check passed' },
-      { phase: ValidationPhase.INSTRUCTION_MODULES, status: 'PASS', message: 'Instruction modules valid' },
-      { phase: ValidationPhase.ARCHITECTURE, status: 'PASS', message: 'Architecture check passed' },
-      { phase: ValidationPhase.DATA_CONTRACTS, status: 'WARN', message: 'Schema version mismatch', details: 'Expected v2' },
-      { phase: ValidationPhase.INTEGRATION, status: 'FAIL', message: 'lefthook.yml not found' },
+      makeResult({ phase: ValidationPhase.AST_STRUCTURE, message: 'AST check passed' }),
+      makeResult({ phase: ValidationPhase.INSTRUCTION_MODULES, message: 'Instruction modules valid' }),
+      makeResult({ phase: ValidationPhase.ARCHITECTURE, message: 'Architecture check passed' }),
+      makeResult({ phase: ValidationPhase.DATA_CONTRACTS, status: 'WARN', message: 'Schema version mismatch', details: 'Expected v2' }),
+      makeResult({ phase: ValidationPhase.INTEGRATION, status: 'FAIL', message: 'lefthook.yml not found' }),
     ];
 
     const manifest = generateManifest(results);
@@ -80,7 +93,7 @@ describe('manifest', () => {
 describe('validator exit code', () => {
   it('returns 0 when no failures', () => {
     const results: ValidationResult[] = [
-      { phase: ValidationPhase.AST_STRUCTURE, status: 'PASS', message: 'OK' },
+      makeResult({ phase: ValidationPhase.AST_STRUCTURE }),
     ];
     const hasFailures = results.some((r) => r.status === 'FAIL');
     expect(hasFailures ? 1 : 0).toBe(0);
@@ -88,8 +101,8 @@ describe('validator exit code', () => {
 
   it('returns 1 when any failure exists', () => {
     const results: ValidationResult[] = [
-      { phase: ValidationPhase.AST_STRUCTURE, status: 'PASS', message: 'OK' },
-      { phase: ValidationPhase.ARCHITECTURE, status: 'FAIL', message: 'Missing' },
+      makeResult({ phase: ValidationPhase.AST_STRUCTURE }),
+      makeResult({ phase: ValidationPhase.ARCHITECTURE, status: 'FAIL' }),
     ];
     const hasFailures = results.some((r) => r.status === 'FAIL');
     expect(hasFailures ? 1 : 0).toBe(1);

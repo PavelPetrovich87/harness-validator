@@ -1,13 +1,21 @@
 {
   "validated_at": "2026-06-04T10:00:00.000Z",
   "version": "0.1.0",
+  "criteria_version": "0.1.0",
   "errors": 1,
   "warnings": 1,
   "results": [
-    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "AGENTS.md structure valid" },
-    { "phase": "INSTRUCTION_MODULES", "status": "PASS", "message": "2 local instruction modules found" },
-    { "phase": "ARCHITECTURE", "status": "PASS", "message": "dependency-cruiser config valid" },
-    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "feature_list.json uses old schema version" },
-    { "phase": "INTEGRATION", "status": "FAIL", "message": "lefthook.yml not found" }
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "AGENTS.md structure valid", "criterionId": "ast-sections-present", "severity": "critical" },
+    { "phase": "INSTRUCTION_MODULES", "status": "PASS", "message": "2 local instruction modules found", "criterionId": "im-local-file-count", "severity": "critical" },
+    { "phase": "ARCHITECTURE", "status": "PASS", "message": "dependency-cruiser config valid", "criterionId": "arch-forbidden-count", "severity": "critical" },
+    { "phase": "DATA_CONTRACTS", "status": "WARN", "message": "feature_list.json uses old schema version", "criterionId": "dc-schema-exists", "severity": "warning" },
+    { "phase": "INTEGRATION", "status": "FAIL", "message": "lefthook.yml not found", "criterionId": "int-lefthook-exists", "severity": "critical", "recommendation": "Create lefthook.yml with pre-commit hooks" }
+  ],
+  "scores": [
+    { "phase": "AST_STRUCTURE", "score": 100, "passCount": 1, "failCount": 0, "warnCount": 0, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "INSTRUCTION_MODULES", "score": 100, "passCount": 1, "failCount": 0, "warnCount": 0, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "ARCHITECTURE", "score": 100, "passCount": 1, "failCount": 0, "warnCount": 0, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "DATA_CONTRACTS", "score": 0, "passCount": 0, "failCount": 0, "warnCount": 1, "totalCriteria": 1, "recommendations": [] },
+    { "phase": "INTEGRATION", "score": 0, "passCount": 0, "failCount": 1, "warnCount": 0, "totalCriteria": 1, "recommendations": ["Create lefthook.yml with pre-commit hooks"] }
   ]
 }

@@ -1,53 +1,133 @@
 {
-  "validated_at": "2026-06-04T13:40:54.961Z",
+  "validated_at": "2026-06-07T09:28:48.310Z",
   "version": "0.1.0",
+  "criteria_version": "0.1.0",
   "errors": 4,
   "warnings": 1,
   "results": [
     {
       "phase": "AST_STRUCTURE",
       "status": "FAIL",
-      "message": "AGENTS.md not found"
+      "message": "AGENTS.md not found",
+      "criterionId": "ast-file-exists",
+      "severity": "critical",
+      "recommendation": "Create AGENTS.md at the project root with required H2 sections"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "PASS",
-      "message": ".claude/instructions/local/ has 2 .md file(s)"
+      "message": ".claude/instructions/local/ has 2 .md file(s)",
+      "criterionId": "im-local-file-count",
+      "severity": "critical"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "PASS",
-      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/api-endpoints.md"
+      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/api-endpoints.md",
+      "criterionId": "im-local-frontmatter-valid",
+      "severity": "critical"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "PASS",
-      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/react-components.md"
+      "message": "Valid frontmatter: /Users/user/work/harness_project/tests/fixtures/instruction-modules-valid/.claude/instructions/local/react-components.md",
+      "criterionId": "im-local-frontmatter-valid",
+      "severity": "critical"
     },
     {
       "phase": "INSTRUCTION_MODULES",
       "status": "PASS",
-      "message": ".claude/instructions/shared/ has 1 .md file(s)"
+      "message": ".claude/instructions/shared/ has 1 .md file(s)",
+      "criterionId": "im-shared-file-count",
+      "severity": "critical"
     },
     {
       "phase": "ARCHITECTURE",
       "status": "FAIL",
-      "message": ".dependency-cruiser.js not found"
+      "message": ".dependency-cruiser.js not found",
+      "criterionId": "arch-config-exists",
+      "severity": "critical",
+      "recommendation": "Create .dependency-cruiser.js with architectural layer rules"
     },
     {
       "phase": "DATA_CONTRACTS",
       "status": "FAIL",
-      "message": "feature_list.json not found"
+      "message": "feature_list.json not found",
+      "criterionId": "dc-feature-list-exists",
+      "severity": "critical",
+      "recommendation": "Create feature_list.json to track project features"
     },
     {
       "phase": "INTEGRATION",
       "status": "FAIL",
-      "message": "lefthook.yml not found"
+      "message": "lefthook.yml not found",
+      "criterionId": "int-lefthook-exists",
+      "severity": "critical",
+      "recommendation": "Create lefthook.yml with pre-commit hooks"
     },
     {
       "phase": "INTEGRATION",
       "status": "WARN",
-      "message": ".github/workflows/ci.yml not found"
+      "message": ".github/workflows/ci.yml not found",
+      "criterionId": "int-ci-exists",
+      "severity": "warning",
+      "recommendation": "Create .github/workflows/ci.yml with at least 4 jobs"
+    }
+  ],
+  "scores": [
+    {
+      "phase": "AST_STRUCTURE",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create AGENTS.md at the project root with required H2 sections"
+      ]
+    },
+    {
+      "phase": "INSTRUCTION_MODULES",
+      "score": 100,
+      "passCount": 4,
+      "failCount": 0,
+      "warnCount": 0,
+      "totalCriteria": 4,
+      "recommendations": []
+    },
+    {
+      "phase": "ARCHITECTURE",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create .dependency-cruiser.js with architectural layer rules"
+      ]
+    },
+    {
+      "phase": "DATA_CONTRACTS",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 0,
+      "totalCriteria": 1,
+      "recommendations": [
+        "Create feature_list.json to track project features"
+      ]
+    },
+    {
+      "phase": "INTEGRATION",
+      "score": 0,
+      "passCount": 0,
+      "failCount": 1,
+      "warnCount": 1,
+      "totalCriteria": 2,
+      "recommendations": [
+        "Create lefthook.yml with pre-commit hooks",
+        "Create .github/workflows/ci.yml with at least 4 jobs"
+      ]
     }
   ]
 }

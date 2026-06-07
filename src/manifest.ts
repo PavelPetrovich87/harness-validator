@@ -1,20 +1,23 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import type { Manifest, ValidationResult } from './types.js';
+import type { Manifest, ValidationResult, ModuleScore } from './types.js';
+import { CRITERIA_VERSION } from './criteria-version.js';
 
 /**
  * Generate manifest from validation results
  */
-export function generateManifest(results: ValidationResult[]): Manifest {
+export function generateManifest(results: ValidationResult[], scores?: ModuleScore[]): Manifest {
   const errors = results.filter((r) => r.status === 'FAIL').length;
   const warnings = results.filter((r) => r.status === 'WARN').length;
 
   return {
     validated_at: new Date().toISOString(),
     version: '0.1.0',
+    criteria_version: CRITERIA_VERSION,
     errors,
     warnings,
     results,
+    scores: scores ?? [],
   };
 }
 

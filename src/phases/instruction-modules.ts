@@ -42,6 +42,9 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
       phase: ValidationPhase.INSTRUCTION_MODULES,
       status: 'WARN',
       message: '.claude/instructions/ directory tree not found',
+      criterionId: 'im-tree-exists',
+      severity: 'warning',
+      recommendation: 'Create .claude/instructions/ with local/ and shared/ subdirectories',
     });
     return results;
   }
@@ -52,6 +55,9 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
       phase: ValidationPhase.INSTRUCTION_MODULES,
       status: 'WARN',
       message: '.claude/instructions/local/ not found',
+      criterionId: 'im-local-dir-exists',
+      severity: 'warning',
+      recommendation: 'Create .claude/instructions/local/ and add at least 2 .md files',
     });
   } else {
     const localFiles = getMarkdownFiles(localDir);
@@ -60,12 +66,17 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
         phase: ValidationPhase.INSTRUCTION_MODULES,
         status: 'FAIL',
         message: `.claude/instructions/local/ has ${localFiles.length} .md file(s) (min ${MIN_LOCAL_FILES})`,
+        criterionId: 'im-local-file-count',
+        severity: 'critical',
+        recommendation: `Add at least ${MIN_LOCAL_FILES} .md files to .claude/instructions/local/`,
       });
     } else {
       results.push({
         phase: ValidationPhase.INSTRUCTION_MODULES,
         status: 'PASS',
         message: `.claude/instructions/local/ has ${localFiles.length} .md file(s)`,
+        criterionId: 'im-local-file-count',
+        severity: 'critical',
       });
     }
 
@@ -83,6 +94,9 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
           phase: ValidationPhase.INSTRUCTION_MODULES,
           status: 'FAIL',
           message: `Missing or invalid frontmatter: ${filePath}`,
+          criterionId: 'im-local-frontmatter-valid',
+          severity: 'critical',
+          recommendation: `Add valid YAML frontmatter to ${filePath}`,
         });
         continue;
       }
@@ -95,12 +109,17 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
           status: 'FAIL',
           message: `Invalid frontmatter: ${filePath}`,
           details: errors || 'Unknown validation error',
+          criterionId: 'im-local-frontmatter-valid',
+          severity: 'critical',
+          recommendation: `Fix frontmatter schema errors in ${filePath}: ${errors || 'see details'}`,
         });
       } else {
         results.push({
           phase: ValidationPhase.INSTRUCTION_MODULES,
           status: 'PASS',
           message: `Valid frontmatter: ${filePath}`,
+          criterionId: 'im-local-frontmatter-valid',
+          severity: 'critical',
         });
       }
     }
@@ -112,6 +131,9 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
       phase: ValidationPhase.INSTRUCTION_MODULES,
       status: 'WARN',
       message: '.claude/instructions/shared/ not found',
+      criterionId: 'im-shared-dir-exists',
+      severity: 'warning',
+      recommendation: 'Create .claude/instructions/shared/ and add at least 1 .md file',
     });
   } else {
     const sharedFiles = getMarkdownFiles(sharedDir);
@@ -120,12 +142,17 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
         phase: ValidationPhase.INSTRUCTION_MODULES,
         status: 'FAIL',
         message: `.claude/instructions/shared/ has ${sharedFiles.length} .md file(s) (min ${MIN_SHARED_FILES})`,
+        criterionId: 'im-shared-file-count',
+        severity: 'critical',
+        recommendation: `Add at least ${MIN_SHARED_FILES} .md file to .claude/instructions/shared/`,
       });
     } else {
       results.push({
         phase: ValidationPhase.INSTRUCTION_MODULES,
         status: 'PASS',
         message: `.claude/instructions/shared/ has ${sharedFiles.length} .md file(s)`,
+        criterionId: 'im-shared-file-count',
+        severity: 'critical',
       });
     }
   }

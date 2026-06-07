@@ -29,6 +29,9 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
       phase: ValidationPhase.AST_STRUCTURE,
       status: 'FAIL',
       message: 'AGENTS.md not found',
+      criterionId: 'ast-file-exists',
+      severity: 'critical',
+      recommendation: 'Create AGENTS.md at the project root with required H2 sections',
     });
     return results;
   }
@@ -46,12 +49,17 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
           phase: ValidationPhase.AST_STRUCTURE,
           status: 'PASS',
           message: `H2 heading "${section}" detected via AST`,
+          criterionId: `ast-section-${section.toLowerCase().replace(/\s+/g, '-')}`,
+          severity: 'critical',
         });
       } else {
         results.push({
           phase: ValidationPhase.AST_STRUCTURE,
           status: 'FAIL',
           message: `H2 heading "${section}" not found in AGENTS.md`,
+          criterionId: `ast-section-${section.toLowerCase().replace(/\s+/g, '-')}`,
+          severity: 'critical',
+          recommendation: `Add H2 heading "${section}" to AGENTS.md`,
         });
       }
     }
@@ -66,12 +74,17 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'FAIL',
         message: `${lineCount} lines (max ${MAX_LINES})`,
+        criterionId: 'ast-line-count',
+        severity: 'warning',
+        recommendation: 'Reduce AGENTS.md to 60 lines or fewer for readability',
       });
     } else {
       results.push({
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'PASS',
         message: `Line count: ${lineCount} (max ${MAX_LINES})`,
+        criterionId: 'ast-line-count',
+        severity: 'warning',
       });
     }
 
@@ -82,12 +95,17 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'FAIL',
         message: `Safety section has ${safetyItems.length} items (min ${MIN_SAFETY_ITEMS})`,
+        criterionId: 'ast-safety-items',
+        severity: 'critical',
+        recommendation: `Add at least ${MIN_SAFETY_ITEMS} safety rules under the Safety heading`,
       });
     } else {
       results.push({
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'PASS',
         message: `Safety section has ${safetyItems.length} items`,
+        criterionId: 'ast-safety-items',
+        severity: 'critical',
       });
     }
 
@@ -98,12 +116,17 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'FAIL',
         message: `Feedback Loop section has ${feedbackLoopItems.length} items (min ${MIN_FEEDBACK_LOOP_ITEMS})`,
+        criterionId: 'ast-feedback-loop-items',
+        severity: 'critical',
+        recommendation: `Add at least ${MIN_FEEDBACK_LOOP_ITEMS} feedback loop rules under the Feedback Loop heading`,
       });
     } else {
       results.push({
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'PASS',
         message: `Feedback Loop section has ${feedbackLoopItems.length} items`,
+        criterionId: 'ast-feedback-loop-items',
+        severity: 'critical',
       });
     }
 
@@ -114,12 +137,17 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'FAIL',
         message: `Circuit Breaker section has ${circuitBreakerItems.length} items (min ${MIN_CIRCUIT_BREAKER_ITEMS})`,
+        criterionId: 'ast-circuit-breaker-items',
+        severity: 'critical',
+        recommendation: 'Add at least 1 circuit breaker rule under the Circuit Breaker heading',
       });
     } else {
       results.push({
         phase: ValidationPhase.AST_STRUCTURE,
         status: 'PASS',
         message: `Circuit Breaker section has ${circuitBreakerItems.length} items`,
+        criterionId: 'ast-circuit-breaker-items',
+        severity: 'critical',
       });
     }
   } catch (error) {
@@ -127,6 +155,9 @@ export async function validateAstStructure(projectRoot: string): Promise<Validat
       phase: ValidationPhase.AST_STRUCTURE,
       status: 'FAIL',
       message: `Failed to parse AGENTS.md: ${(error as Error).message}`,
+      criterionId: 'ast-parseable',
+      severity: 'critical',
+      recommendation: 'Fix AGENTS.md syntax so it can be parsed as valid Markdown',
     });
   }
 

@@ -19,6 +19,9 @@ export async function validateArchitecture(projectRoot: string): Promise<Validat
       phase: ValidationPhase.ARCHITECTURE,
       status: 'FAIL',
       message: '.dependency-cruiser.js not found',
+      criterionId: 'arch-config-exists',
+      severity: 'critical',
+      recommendation: 'Create .dependency-cruiser.js with architectural layer rules',
     });
     return results;
   }
@@ -47,6 +50,9 @@ export async function validateArchitecture(projectRoot: string): Promise<Validat
         phase: ValidationPhase.ARCHITECTURE,
         status: 'FAIL',
         message: '.dependency-cruiser.js does not export a valid object',
+        criterionId: 'arch-config-valid',
+        severity: 'critical',
+        recommendation: 'Ensure .dependency-cruiser.js exports an object with a "forbidden" array',
       });
       return results;
     }
@@ -57,6 +63,9 @@ export async function validateArchitecture(projectRoot: string): Promise<Validat
         status: 'FAIL',
         message: '.dependency-cruiser.js missing "forbidden" array',
         details: 'Config must export a "forbidden" array of rules',
+        criterionId: 'arch-forbidden-array',
+        severity: 'critical',
+        recommendation: 'Add a "forbidden" array with at least 2 architectural rules to .dependency-cruiser.js',
       });
       return results;
     }
@@ -66,6 +75,9 @@ export async function validateArchitecture(projectRoot: string): Promise<Validat
         phase: ValidationPhase.ARCHITECTURE,
         status: 'FAIL',
         message: `.dependency-cruiser.js has ${config.forbidden.length} forbidden rules (min 2)`,
+        criterionId: 'arch-forbidden-count',
+        severity: 'critical',
+        recommendation: 'Add at least 2 rules to the "forbidden" array in .dependency-cruiser.js',
       });
       return results;
     }
@@ -74,12 +86,17 @@ export async function validateArchitecture(projectRoot: string): Promise<Validat
       phase: ValidationPhase.ARCHITECTURE,
       status: 'PASS',
       message: `.dependency-cruiser.js has ${config.forbidden.length} forbidden rules`,
+      criterionId: 'arch-forbidden-count',
+      severity: 'critical',
     });
   } catch (error) {
     results.push({
       phase: ValidationPhase.ARCHITECTURE,
       status: 'FAIL',
       message: `Failed to load .dependency-cruiser.js: ${(error as Error).message}`,
+      criterionId: 'arch-config-loadable',
+      severity: 'critical',
+      recommendation: 'Fix syntax or module errors in .dependency-cruiser.js',
     });
   }
 

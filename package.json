@@ -14,7 +14,10 @@
     "setup": "tsx scripts/setup-harness.ts",
     "setup:ci": "tsx scripts/setup-harness.ts --non-interactive",
     "dogfood": "tsx scripts/dogfood.ts",
-    "dogfood:all": "tsx scripts/dogfood.ts --all"
+    "dogfood:all": "tsx scripts/dogfood.ts --all",
+    "research:prompt": "tsx scripts/generate-research-prompt.ts",
+    "research:apply": "tsx scripts/apply-research.ts",
+    "diagnose": "tsx scripts/diagnose-harness.ts"
   },
   "dependencies": {
     "ajv": "^8.17.1",

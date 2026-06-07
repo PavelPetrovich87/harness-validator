@@ -10,6 +10,8 @@ import { CircuitBreaker } from './circuit-breaker.js';
 import { generateTriageReport, type TriageAttempt } from './generators/triage.js';
 import { askQuestions, loadAnswersFromJson, type SetupAnswers } from './interactive.js';
 import { detectArchitecturePattern } from './detect-architecture.js';
+import { runDiagnostics, formatDiagnostics } from './diagnostics.js';
+import { formatScoreTable } from './scoring.js';
 
 export interface SetupOptions {
   interactive?: boolean;
@@ -75,6 +77,18 @@ export async function runSetup(
   const manifestPath = join(projectRoot, '.harness', 'manifest.json');
   const errors: string[] = [];
 
+  // Phase 0: Diagnostics
+  const diagnostics = runDiagnostics(projectRoot);
+  if (diagnostics.allExist) {
+    console.log(formatDiagnostics(diagnostics));
+    console.log('');
+    console.log('Harness is already fully installed. Run `npm run validate` to review compliance.');
+    return { exitCode: 0, manifestPath, errors: [] };
+  } else if (diagnostics.existingModules.length > 0) {
+    console.log(formatDiagnostics(diagnostics));
+    console.log('');
+  }
+
   // Phase 1: Detect stack
   const stack = detectStack(projectRoot);
   if (stack.length === 0) {
@@ -119,6 +133,9 @@ export async function runSetup(
 
     if (lastExitCode === 0) {
       breaker.recordSuccess('setup');
+      console.log('');
+      console.log('Validation passed. Module scores:');
+      console.log(formatScoreTable(result.scores));
       return { exitCode: 0, manifestPath, errors: [] };
     }
 

@@ -1,9 +1,13 @@
 {
   "validated_at": "2026-06-02T14:30:00.000Z",
   "version": "2.0.0",
+  "criteria_version": "0.1.0",
   "errors": 1,
   "warnings": 2,
   "results": [
-    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK", "details": null }
+    { "phase": "AST_STRUCTURE", "status": "PASS", "message": "OK", "details": null, "criterionId": "ast-parseable", "severity": "critical" }
+  ],
+  "scores": [
+    { "phase": "AST_STRUCTURE", "score": 100, "passCount": 1, "failCount": 0, "warnCount": 0, "totalCriteria": 1, "recommendations": [] }
   ]
 }

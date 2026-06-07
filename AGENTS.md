@@ -7,6 +7,10 @@
 
 - `npm run build`
 - `npm test`
+- `npm run validate`
+- `npm run diagnose`
+- `npm run research:prompt`
+- `npm run research:apply`
 
 ## Safety
 

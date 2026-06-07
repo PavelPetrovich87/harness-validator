@@ -17,6 +17,9 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
       phase: ValidationPhase.DATA_CONTRACTS,
       status: 'FAIL',
       message: 'feature_list.json not found',
+      criterionId: 'dc-feature-list-exists',
+      severity: 'critical',
+      recommendation: 'Create feature_list.json to track project features',
     });
     return results;
   }
@@ -27,6 +30,9 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
       phase: ValidationPhase.DATA_CONTRACTS,
       status: 'WARN',
       message: 'feature_list.schema.json not found — skipping schema validation',
+      criterionId: 'dc-schema-exists',
+      severity: 'warning',
+      recommendation: 'Copy feature_list.schema.json into the project root for CI validation',
     });
     return results;
   }
@@ -44,6 +50,8 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
         phase: ValidationPhase.DATA_CONTRACTS,
         status: 'PASS',
         message: 'feature_list.json validates against schema',
+        criterionId: 'dc-feature-list-valid',
+        severity: 'critical',
       });
     } else {
       const errors = validate.errors
@@ -54,6 +62,9 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
         status: 'FAIL',
         message: 'feature_list.json schema validation failed',
         details: errors || 'Unknown validation error',
+        criterionId: 'dc-feature-list-valid',
+        severity: 'critical',
+        recommendation: `Fix schema errors in feature_list.json: ${errors || 'see details'}`,
       });
     }
   } catch (error) {
@@ -61,6 +72,9 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
       phase: ValidationPhase.DATA_CONTRACTS,
       status: 'FAIL',
       message: `Data contract validation error: ${(error as Error).message}`,
+      criterionId: 'dc-parseable',
+      severity: 'critical',
+      recommendation: 'Ensure both feature_list.json and feature_list.schema.json are valid JSON',
     });
   }
 

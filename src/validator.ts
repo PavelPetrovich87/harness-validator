@@ -1,10 +1,11 @@
-import type { ValidationResult, Manifest } from './types.js';
+import type { ValidationResult, Manifest, ModuleScore } from './types.js';
 import { generateManifest, writeManifest } from './manifest.js';
 import { validateAstStructure } from './phases/ast-structure.js';
 import { validateInstructionModules } from './phases/instruction-modules.js';
 import { validateArchitecture } from './phases/architecture.js';
 import { validateDataContracts } from './phases/data-contracts.js';
 import { validateIntegration } from './phases/integration.js';
+import { calculateScores } from './scoring.js';
 
 export interface ValidatorOptions {
   projectRoot: string;
@@ -23,7 +24,7 @@ export class HarnessValidator {
   /**
    * Run all 5 validation phases
    */
-  async run(): Promise<{ results: ValidationResult[]; manifest: Manifest; exitCode: number }> {
+  async run(): Promise<{ results: ValidationResult[]; manifest: Manifest; scores: ModuleScore[]; exitCode: number }> {
     const results: ValidationResult[] = [];
 
     // Phase 1: AST Structure
@@ -41,12 +42,13 @@ export class HarnessValidator {
     // Phase 5: Integration
     results.push(...(await validateIntegration(this.projectRoot)));
 
-    const manifest = generateManifest(results);
+    const scores = calculateScores(results);
+    const manifest = generateManifest(results, scores);
     writeManifest(manifest, this.manifestPath);
 
     const hasFailures = results.some((r) => r.status === 'FAIL');
     const exitCode = hasFailures ? 1 : 0;
 
-    return { results, manifest, exitCode };
+    return { results, manifest, scores, exitCode };
   }
 }
