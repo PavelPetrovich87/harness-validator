@@ -23,6 +23,7 @@
     "templates/",
     "schemas/",
     "references/",
+    ".kilo/skills/",
     "README.md",
     "SKILL.md",
     "AGENTS.md"

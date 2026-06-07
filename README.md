@@ -175,22 +175,82 @@ const report = runDiagnostics('./my-project');
 console.log(report.allExist); // true if fully installed
 ```
 
-## Sub-Skills (Agent Workflow Pack)
+## Install as Agent Skill
 
-This repo is a **hybrid skill**: it contains both the TypeScript toolchain and focused sub-skills for AI agents.
+This repo is a **hybrid skill**: it contains both the TypeScript toolchain and focused sub-skills for AI agents. Install the skill files into your agent's skill directory to enable harness-related commands.
 
-| Sub-Skill | Location | Use When |
-|-----------|----------|----------|
-| `harness-setup` | `.kilo/skills/harness-setup/` | Full bootstrap flow with circuit breaker |
-| `harness-validate` | `.kilo/skills/harness-validate/` | Validate-only with scoring and recommendations |
-| `harness-dogfood` | `.kilo/skills/harness-dogfood/` | Testing the harness on disposable projects |
+### For Kilo
 
-Load a sub-skill into your agent's skill directory:
+Kilo discovers skills in `.kilo/skills/<name>/SKILL.md`. Once installed, the skill activates when Kilo sees phrases like "set up harness", "validate project", or "run dogfood" in user requests.
+
+#### Option A: Git subtree (recommended)
 
 ```bash
-# Example for Kilo
+git subtree add --prefix=.kilo/skills/harness-validator \
+  https://github.com/PavelPetrovich87/harness-validator.git v0.2.0
+```
+
+To update later:
+
+```bash
+git subtree pull --prefix=.kilo/skills/harness-validator \
+  https://github.com/PavelPetrovich87/harness-validator.git v0.2.0
+```
+
+**Pros:** Skill files are committed into your repo (works offline), CI and team members get them automatically, easy to update.
+**Cons:** Adds the validator's full git history to your repo.
+
+#### Option B: Manual copy
+
+```bash
+mkdir -p .kilo/skills/harness-validator
+curl -L https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/v0.2.0/.kilo/skills/harness-validator/SKILL.md \
+  > .kilo/skills/harness-validator/SKILL.md
+```
+
+**Pros:** No git history added, minimal footprint.
+**Cons:** Manual update process, risk of drift from upstream.
+
+### For Claude Code
+
+Claude Code uses `.claude/instructions/shared/` for cross-project reusable instructions:
+
+```bash
+mkdir -p .claude/instructions/shared/harness-validator
+curl -L https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/v0.2.0/.kilo/skills/harness-validator/SKILL.md \
+  > .claude/instructions/shared/harness-validator/SKILL.md
+```
+
+### From NPM
+
+If you already installed the package via NPM, the skill files are bundled in `node_modules/ai-harness-validator/.kilo/skills/`. Copy them into your agent's skill directory:
+
+```bash
+npm install --save-dev ai-harness-validator
+mkdir -p .kilo/skills
+cp -r node_modules/ai-harness-validator/.kilo/skills/* .kilo/skills/
+```
+
+**Note:** NPM gives you both the CLI toolchain (`npx harness-setup`, `npx harness-validate`) and the agent skills. The CLI works immediately; the skills require the copy step above so your agent can discover them.
+
+### Sub-Skill Selection
+
+This repo provides four focused skills. Install only what you need:
+
+| Install | Use When |
+|---------|----------|
+| `harness-validator` only | General harness requests; the meta-skill routes to the right sub-skill automatically |
+| `harness-setup` | Only need the setup/bootstrap flow |
+| `harness-validate` | Only need validation in CI/agent workflows |
+| `harness-dogfood` | Only testing the harness itself |
+| Full pack | Active harness development or you want all capabilities available |
+
+To install a specific sub-skill instead of the meta-skill, replace `harness-validator` with the sub-skill name in the paths above. For example, to install only `harness-validate`:
+
+```bash
 mkdir -p .kilo/skills/harness-validate
-cp .kilo/skills/harness-validate/SKILL.md .kilo/skills/harness-validate/
+curl -L https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/v0.2.0/.kilo/skills/harness-validate/SKILL.md \
+  > .kilo/skills/harness-validate/SKILL.md
 ```
 
 ## Project Structure

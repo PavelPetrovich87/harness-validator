@@ -1,8 +1,8 @@
 {
-  "validated_at": "2026-06-07T09:12:45.726Z",
+  "validated_at": "2026-06-07T13:42:02.188Z",
   "version": "0.1.0",
   "criteria_version": "0.1.0",
-  "errors": 1,
+  "errors": 0,
   "warnings": 1,
   "results": [
     {
@@ -106,11 +106,10 @@
     },
     {
       "phase": "DATA_CONTRACTS",
-      "status": "FAIL",
-      "message": "Data contract validation error: Unexpected non-whitespace character after JSON at position 342 (line 20 column 3)",
-      "criterionId": "dc-parseable",
-      "severity": "critical",
-      "recommendation": "Ensure both feature_list.json and feature_list.schema.json are valid JSON"
+      "status": "PASS",
+      "message": "feature_list.json validates against schema",
+      "criterionId": "dc-feature-list-valid",
+      "severity": "critical"
     },
     {
       "phase": "INTEGRATION",
@@ -143,7 +142,7 @@
     {
       "phase": "INTEGRATION",
       "status": "PASS",
-      "message": ".github/workflows/ci.yml has 4 jobs",
+      "message": ".github/workflows/ci.yml has 5 jobs",
       "criterionId": "int-ci-jobs",
       "severity": "critical"
     }
@@ -180,14 +179,12 @@
     },
     {
       "phase": "DATA_CONTRACTS",
-      "score": 0,
-      "passCount": 0,
-      "failCount": 1,
+      "score": 100,
+      "passCount": 1,
+      "failCount": 0,
       "warnCount": 0,
       "totalCriteria": 1,
-      "recommendations": [
-        "Ensure both feature_list.json and feature_list.schema.json are valid JSON"
-      ]
+      "recommendations": []
     },
     {
       "phase": "INTEGRATION",
