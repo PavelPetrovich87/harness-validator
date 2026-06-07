@@ -1,0 +1,58 @@
+name: Harness Validate
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version'
+        default: '20'
+        type: string
+      project-path:
+        description: 'Path to project root relative to workspace'
+        default: '.'
+        type: string
+      install-source:
+        description: 'Install from npm or github'
+        default: 'github'
+        type: string
+      version:
+        description: 'Version tag or branch'
+        default: 'v0.2.0'
+        type: string
+      recommendations:
+        description: 'Show recommendations for failures'
+        default: false
+        type: boolean
+      upload-manifest:
+        description: 'Upload manifest.json as artifact'
+        default: true
+        type: boolean
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install harness-validator
+        run: |
+          if [ "${{ inputs.install-source }}" = "npm" ]; then
+            npm install -g ai-harness-validator@${{ inputs.version }}
+          else
+            npm install -g github:PavelPetrovich87/harness-validator#${{ inputs.version }}
+          fi
+
+      - name: Validate harness
+        run: |
+          harness-validate --github --project ${{ inputs.project-path }} ${{ inputs.recommendations && '--recommendations' || '' }}
+
+      - name: Upload manifest
+        if: inputs.upload-manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-manifest
+          path: ${{ inputs.project-path }}/.harness/manifest.json

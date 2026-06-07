@@ -39,5 +39,5 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: cd .harness/validator && npm ci
-      - run: cd .harness/validator && npx tsx scripts/validate-harness.ts --github --project ../..
+      - run: npm run build
+      - run: npx harness-validate --github

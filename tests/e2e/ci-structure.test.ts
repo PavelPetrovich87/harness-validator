@@ -23,7 +23,8 @@ describe('E2E: CI workflow structure', () => {
     const validateJob = validateJobMatch![0];
     const hasValidateCommand =
       validateJob.includes('npm run validate') ||
-      validateJob.includes('npx tsx scripts/validate-harness.ts');
+      validateJob.includes('npx tsx scripts/validate-harness.ts') ||
+      validateJob.includes('npx harness-validate');
     expect(hasValidateCommand).toBe(true);
   });
 

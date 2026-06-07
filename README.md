@@ -44,7 +44,42 @@ npx tsx https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/mai
 
 > **Note:** For production use, pin to a tag: `...@v0.2.0` instead of `.../main`.
 
-### 4. Use in CI
+## CI Integration
+
+Add harness validation to your project with one line:
+
+```yaml
+jobs:
+  harness:
+    uses: PavelPetrovich87/harness-validator/.github/workflows/harness-validate.yml@v0.2.0
+```
+
+With options:
+
+```yaml
+jobs:
+  harness:
+    uses: PavelPetrovich87/harness-validator/.github/workflows/harness-validate.yml@v0.2.0
+    with:
+      project-path: ./apps/web
+      recommendations: true
+      upload-manifest: true
+```
+
+### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `node-version` | string | `20` | Node.js version to use |
+| `project-path` | string | `.` | Path to project root relative to workspace |
+| `install-source` | string | `github` | Install from `npm` or `github` |
+| `version` | string | `v0.2.0` | Version tag or branch to install |
+| `recommendations` | boolean | `false` | Show recommendations for failures |
+| `upload-manifest` | boolean | `true` | Upload `manifest.json` as artifact |
+
+### Manual CI Setup
+
+If you prefer to run the validator directly in your own job:
 
 ```yaml
 # .github/workflows/harness.yml
