@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { execSync } from 'node:child_process';
-import Ajv from 'ajv';
+import { Ajv } from 'ajv';
 import type { DogfoodTemplate, DogfoodPhaseResult } from './types.js';
 
 const EXPECTED_STACKS: Record<DogfoodTemplate, string[]> = {

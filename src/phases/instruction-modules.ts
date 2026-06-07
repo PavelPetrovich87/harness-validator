@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import Ajv from 'ajv';
+import { Ajv } from 'ajv';
 import { ValidationPhase, type ValidationResult } from '../types.js';
 import { extractFrontmatter } from '../utils/frontmatter.js';
 
@@ -103,7 +103,7 @@ export async function validateInstructionModules(projectRoot: string): Promise<V
 
       const valid = validate(frontmatter);
       if (!valid) {
-        const errors = validate.errors?.map((e) => `${e.instancePath || '/'}: ${e.message}`).join('; ');
+        const errors = validate.errors?.map((err: { instancePath?: string; message?: string }) => `${err.instancePath || '/'}: ${err.message}`).join('; ');
         results.push({
           phase: ValidationPhase.INSTRUCTION_MODULES,
           status: 'FAIL',

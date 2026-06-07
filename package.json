@@ -3,7 +3,34 @@
   "version": "0.1.0",
   "description": "AST-based validator for AI Harness system",
   "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "harness-setup": "./dist/scripts/setup-harness.js",
+    "harness-validate": "./dist/scripts/validate-harness.js",
+    "harness-diagnose": "./dist/scripts/diagnose-harness.js",
+    "harness-dogfood": "./dist/scripts/dogfood.js"
+  },
+  "files": [
+    "dist/",
+    "templates/",
+    "schemas/",
+    "references/",
+    "README.md",
+    "SKILL.md",
+    "AGENTS.md"
+  ],
   "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsx scripts/copy-assets.ts",
+    "build:clean": "node -e \"require('fs').rmSync('dist', {recursive:true, force:true})\" && npm run build",
+    "prepublishOnly": "npm run build",
     "generate:agents": "tsx scripts/generate-agents.ts",
     "validate": "tsx scripts/validate-harness.ts",
     "validate:feature-list": "ajv validate -s schemas/feature_list.schema.json -d feature_list.json",

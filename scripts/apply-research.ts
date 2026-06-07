@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import Ajv from 'ajv';
+import { Ajv } from 'ajv';
 import type { ResearchResults } from '../src/research-schema.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

@@ -20,7 +20,23 @@ The AI Harness Validator is a deterministic, AST-based toolchain that checks whe
 
 ## Quick Start
 
-### 1. Run in your project (no install)
+### 1. Install from NPM (recommended)
+
+```bash
+npm install --save-dev ai-harness-validator
+npx harness-setup        # interactive setup
+npx harness-validate     # validate only
+npx harness-diagnose     # check what is missing
+```
+
+### 2. Install from GitHub (latest main)
+
+```bash
+npm install --save-dev github:PavelPetrovich87/harness-validator
+npx harness-setup
+```
+
+### 3. Run in your project (no install)
 
 ```bash
 npx tsx https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/main/scripts/validate-harness.ts --project ./my-project
@@ -28,16 +44,7 @@ npx tsx https://raw.githubusercontent.com/PavelPetrovich87/harness-validator/mai
 
 > **Note:** For production use, pin to a tag: `...@v0.2.0` instead of `.../main`.
 
-### 2. Install as a dev dependency
-
-```bash
-npm install --save-dev github:PavelPetrovich87/harness-validator
-npx harness-setup        # interactive setup
-npx harness-validate     # validate only
-npx harness-diagnose     # check what is missing
-```
-
-### 3. Use in CI
+### 4. Use in CI
 
 ```yaml
 # .github/workflows/harness.yml
@@ -52,7 +59,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npx tsx scripts/validate-harness.ts --github
+      - run: npx harness-validate --github
 ```
 
 ## Commands
@@ -108,6 +115,30 @@ Phase 5: Integration
 ```
 
 Output: `.harness/manifest.json` — an audit lock-file with scores, errors, and warnings.
+
+## Programmatic API
+
+You can also use the validator as a library:
+
+```typescript
+import { HarnessValidator, runSetup, runDiagnostics } from 'ai-harness-validator';
+
+// Validate a project
+const validator = new HarnessValidator({
+  projectRoot: './my-project',
+  manifestPath: './my-project/.harness/manifest.json',
+});
+const { results, exitCode, scores } = await validator.run();
+
+// Run setup flow
+const result = await runSetup('./my-project', {
+  interactive: false,
+});
+
+// Diagnostics
+const report = runDiagnostics('./my-project');
+console.log(report.allExist); // true if fully installed
+```
 
 ## Sub-Skills (Agent Workflow Pack)
 
@@ -167,6 +198,12 @@ The setup flow auto-detects the project stack and generates appropriate configs:
 # Install dependencies
 npm ci
 
+# Build for distribution (outputs to dist/)
+npm run build
+
+# Clean build
+npm run build:clean
+
 # Run all tests
 npm test
 
@@ -183,6 +220,20 @@ npm run validate
 npx tsc --noEmit
 ```
 
+### Published Package Contents
+
+The following files are included when the package is published to NPM:
+
+| Path | Contents |
+|------|----------|
+| `dist/` | Compiled JavaScript, type declarations, and copied assets |
+| `templates/` | Instruction modules, architecture patterns, and pipeline templates |
+| `schemas/` | JSON Schemas for data contracts and frontmatter validation |
+| `references/` | Detailed documentation and troubleshooting guides |
+| `README.md`, `SKILL.md`, `AGENTS.md` | Project documentation |
+
+Tests, docs, and internal configuration files are excluded.
+
 ### Adding a new validation phase
 
 1. Add phase logic in `src/phases/<name>.ts`
@@ -195,8 +246,12 @@ npx tsc --noEmit
 ## Requirements
 
 - **Node.js** >= 20
-- **TypeScript** >= 5.4 (dev)
-- **tsx** >= 4.7 (dev, for running `.ts` scripts directly)
+
+For development only:
+- **TypeScript** >= 5.4
+- **tsx** >= 4.7 (for running `.ts` scripts directly)
+
+Consumers installing from NPM do not need TypeScript or tsx — the package ships compiled JavaScript.
 
 ## Related Documentation
 

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import Ajv from 'ajv';
+import { Ajv } from 'ajv';
 import { ValidationPhase, type ValidationResult } from '../types.js';
 
 /**
@@ -67,11 +67,11 @@ export async function validateDataContracts(projectRoot: string): Promise<Valida
         recommendation: `Fix schema errors in feature_list.json: ${errors || 'see details'}`,
       });
     }
-  } catch (error) {
+  } catch (error: unknown) {
     results.push({
       phase: ValidationPhase.DATA_CONTRACTS,
       status: 'FAIL',
-      message: `Data contract validation error: ${(error as Error).message}`,
+      message: `Data contract validation error: ${error instanceof Error ? error.message : String(error)}`,
       criterionId: 'dc-parseable',
       severity: 'critical',
       recommendation: 'Ensure both feature_list.json and feature_list.schema.json are valid JSON',
