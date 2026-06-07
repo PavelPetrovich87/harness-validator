@@ -32,7 +32,7 @@ describe('E2E: generate-agents CLI', () => {
 
     // Step 1: Run CLI to generate AGENTS.md
     const generateOutput = execSync(
-      `npx tsx generate-agents.ts --project "${tempDir}"`,
+      `npx tsx scripts/generate-agents.ts --project "${tempDir}"`,
       {
         cwd: PROJECT_ROOT,
         encoding: 'utf-8',
@@ -74,7 +74,7 @@ describe('E2E: generate-agents CLI', () => {
     }
 
     const validateOutput = execSync(
-      `npx tsx validate-harness.ts --project "${tempDir}"`,
+      `npx tsx scripts/validate-harness.ts --project "${tempDir}"`,
       {
         cwd: PROJECT_ROOT,
         encoding: 'utf-8',

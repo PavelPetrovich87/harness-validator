@@ -16,14 +16,14 @@ describe('E2E: CI workflow structure', () => {
     expect(jobMatches!.length).toBeGreaterThanOrEqual(4);
   });
 
-  it('validate job references npm run validate or npx tsx validate-harness.ts', () => {
+  it('validate job references npm run validate or npx tsx scripts/validate-harness.ts', () => {
     const content = readFileSync(WORKFLOW_PATH, 'utf-8');
     const validateJobMatch = content.match(/validate:\s*\n([\s\S]*?)(?=\n\n|\n  [a-z]|$)/);
     expect(validateJobMatch).not.toBeNull();
     const validateJob = validateJobMatch![0];
     const hasValidateCommand =
       validateJob.includes('npm run validate') ||
-      validateJob.includes('npx tsx validate-harness.ts');
+      validateJob.includes('npx tsx scripts/validate-harness.ts');
     expect(hasValidateCommand).toBe(true);
   });
 

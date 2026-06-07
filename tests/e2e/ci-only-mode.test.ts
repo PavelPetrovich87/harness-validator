@@ -65,7 +65,7 @@ describe('E2E: CI-only validation mode', () => {
 
     const validatorDir = join(tempDir, '.harness', 'validator');
     expect(existsSync(validatorDir)).toBe(true);
-    expect(existsSync(join(validatorDir, 'validate-harness.ts'))).toBe(true);
+    expect(existsSync(join(validatorDir, 'scripts', 'validate-harness.ts'))).toBe(true);
     expect(existsSync(join(validatorDir, 'src', 'validator.ts'))).toBe(true);
     expect(existsSync(join(validatorDir, 'src', 'types.ts'))).toBe(true);
     expect(existsSync(join(validatorDir, 'package.json'))).toBe(true);

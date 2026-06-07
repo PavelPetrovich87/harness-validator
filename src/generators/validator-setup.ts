@@ -7,7 +7,7 @@ import { join, dirname } from 'node:path';
  * .harness/validator/ directory.
  */
 const VALIDATOR_SOURCE_FILES = [
-  'validate-harness.ts',
+  'scripts/validate-harness.ts',
   'src/validator.ts',
   'src/types.ts',
   'src/manifest.ts',

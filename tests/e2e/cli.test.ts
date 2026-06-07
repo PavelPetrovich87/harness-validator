@@ -22,7 +22,7 @@ describe('E2E: CLI execution', () => {
 
     const start = Date.now();
     const output = execSync(
-      `npx tsx validate-harness.ts --project "${VALID_FIXTURE}"`,
+      `npx tsx scripts/validate-harness.ts --project "${VALID_FIXTURE}"`,
       {
         cwd: PROJECT_ROOT,
         encoding: 'utf-8',

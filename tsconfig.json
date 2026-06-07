@@ -16,6 +16,6 @@
     "rootDir": ".",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["src/**/*", "validate-harness.ts", "setup-harness.ts", "tests/**/*", "schemas/**/*", "templates/**/*"],
+  "include": ["src/**/*", "scripts/**/*", "tests/**/*", "schemas/**/*", "templates/**/*"],
   "exclude": ["node_modules", "dist"]
 }
